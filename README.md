@@ -13,9 +13,46 @@
 - Stable Diffusion: 2022년에 출시된 이 텍스트-이미지 변환 모델은 텍스트 설명에서 상세한 비주얼을 생성하는데 매우 뛰어난 성능을 보여줍니다.
 
 
-아래 내용은 Amazon Bedrock을 통해 생성형 Application을 만드는 예제입니다.
+아래 내용은 Amazon Bedrock을 통해 생성형 Application을 만드는 예제 코드에 대한 설명입니다.
 
-## Step 1: Amazon Bedrock 설정
+## Step #1: 모듈 및 환경변수 설정
+
+```
+import streamlit as st
+import boto3
+import json
+from PIL import Image
+import io
+
+
+st.title("Building with Bedrock")  # Title of the application
+st.subheader("Stable Diffusion Demo")
+
+
+# List of Stable Diffusion Preset Styles
+sd_presets = [
+    "None",
+    "3d-model",
+    "analog-film",
+    "anime",
+    "cinematic",
+    "comic-book",
+    "digital-art",
+    "enhance",
+    "fantasy-art",
+    "isometric",
+    "line-art",
+    "low-poly",
+    "modeling-compound",
+    "neon-punk",
+    "origami",
+    "photographic",
+    "pixel-art",
+    "tile-texture",
+]
+```
+
+## Step #2: Amazon Bedrock 설정
 Python 스크립트에서 Amazon Bedrock을 초기화하고 실행 준비를 합니다.
 
 ```
@@ -26,7 +63,7 @@ bedrock_runtime = boto3.client(
 )
 ```
 
-## Step 2: Stable Diffusion 모델 실행(Invoke)
+## Step #3: Stable Diffusion 모델 실행(Invoke)
 베드락 설정이 끝났으면, Stable Diffusion 모델을 실행합니다.
 
 ```
@@ -69,7 +106,7 @@ def generate_image(text, style):
 ```
 
 
-## Step 3: 화면에 생성된 이미지 출력
+## Step #4: 화면에 생성된 이미지 출력
 모델을 통해 이미지를 생성한 후 Python 이미징 라이브러리(PIL)를 사용하여 이미지를 화면에 표시합니다.
 
 ```
@@ -90,7 +127,7 @@ def base64_to_pil(base64_string):
     return image
 ```
 
-## Step 4: 인터렉티브 애플리케이션 생성
+## Step #5: 인터렉티브 애플리케이션 생성
  Streamlit을 사용하여 사용자가 직접 설명을 입력할 수 있는 텍스트 상자를 추가하고 Stable Diffusion이 생성하는 이미지를 실시간으로 확인할 수 있습니다.
 
  ```
